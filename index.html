@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ServTech Rwanda - Project Progress Report</title>
+</head>
+<body style="margin:0; padding:40px 20px; background-color:#f3f4f6; font-family:Georgia, 'Times New Roman', serif; color:#1f2937;">
+
+  <div style="max-width:800px; margin:0 auto; background-color:#ffffff; padding:56px 64px; box-shadow:0 1px 3px rgba(0,0,0,0.1); line-height:1.55;">
+
+    <h1 style="margin:0 0 6px 0; font-size:32px; font-weight:bold; color:#1f2937;">Project Progress Report</h1>
+    <p style="margin:0 0 24px 0; font-size:17px; color:#4f46e5;">ServTech Rwanda: Automated Client Acquisition and Registration System (ACARS-BS)</p>
+
+    <table style="width:100%; border-collapse:collapse; margin-bottom:28px; font-size:14px;">
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; width:28%; border:none;">Student</td>
+        <td style="padding:8px 12px; border:none;">Benjamin Mitima Manzi</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Registration number</td>
+        <td style="padding:8px 12px; border:none;">[Registration number]</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Programme</td>
+        <td style="padding:8px 12px; border:none;">BSc in Information Technology</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Institution</td>
+        <td style="padding:8px 12px; border:none;">Adventist University of Central Africa (AUCA)</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Supervisor</td>
+        <td style="padding:8px 12px; border:none;">[Supervisor name]</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Reporting period</td>
+        <td style="padding:8px 12px; border:none;">1 May 2026 to 14 July 2026</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f3f4f6; font-weight:bold; padding:8px 12px; border:none;">Report date</td>
+        <td style="padding:8px 12px; border:none;">14 July 2026</td>
+      </tr>
+    </table>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">1. Purpose of this report</h2>
+    <p style="margin:0 0 16px 0; text-align:justify; font-size:15px;">This report summarises progress made on the ServTech Rwanda capstone project during the past reporting period. The work centred on closing gaps identified in an earlier review of the system against the original ACARS-BS specification, module by module, along with fixing several defects that surfaced once the platform was in the hands of test users.</p>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">2. Summary of progress</h2>
+    <p style="margin:0 0 16px 0; text-align:justify; font-size:15px;">At the start of this period, a gap analysis had confirmed that Modules 1 through 4 of the specification (Client Registration, KYC Verification, Client Data Management, and Workflow Automation) were partially built, and that Module 5 (Compliance and Audit) had almost nothing beyond a basic activity log. Module 2 was confirmed complete and required no further work. The remaining modules were addressed in order of the original gap list.</p>
+
+    <h3 style="font-size:16px; color:#374151; margin:22px 0 10px 0;">2.1 Module 1: Client Registration</h3>
+    <p style="margin:0 0 8px 0; font-size:15px;">The two outstanding items from the specification were closed:</p>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">A Terms and Conditions step was added to client self-registration, with the acceptance timestamp and version recorded against the client record for audit purposes.</li>
+      <li style="margin-bottom:8px;">Registration progress is now saved as the applicant moves through the form, so a refreshed or reopened tab resumes where they left off instead of restarting. Photos are deliberately excluded from what is saved, both for storage reasons and because biometric data should not sit in browser storage longer than necessary.</li>
+      <li style="margin-bottom:0;">CAPTCHA verification, which had already been built for the registration forms, was extended to the login page as well, and a defect that was silently breaking CAPTCHA on every form was fixed (see section 4).</li>
+    </ul>
+
+    <h3 style="font-size:16px; color:#374151; margin:22px 0 10px 0;">2.2 Module 3: Client Data Management</h3>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">An activity timeline was added to each client's profile, combining registration events, review decisions, messages sent, and automation actions into a single chronological view. Previously the page only showed the client's current state, not the history behind it.</li>
+      <li style="margin-bottom:0;">Bulk actions were added to the admin client list: validating, rejecting, activating, or deactivating multiple clients at once, plus a CSV export of the current selection.</li>
+    </ul>
+
+    <h3 style="font-size:16px; color:#374151; margin:22px 0 10px 0;">2.3 Module 4: Workflow Automation</h3>
+    <p style="margin:0 0 8px 0; font-size:15px;">This was the larger of the two modules flagged as weakest in the original review, and required the most substantial rebuild:</p>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">The rule list was replaced with a visual, drag-and-drop flow designer, showing how each automation rule connects to the registration and review events that trigger it.</li>
+      <li style="margin-bottom:8px;">Rule thresholds that were previously fixed in code (for example, the minimum acceptable face-match confidence) are now configurable from a settings panel on each rule.</li>
+      <li style="margin-bottom:8px;">Escalation rules were added, so applications left pending beyond a configurable time limit are flagged and the responsible role is notified by email.</li>
+      <li style="margin-bottom:8px;">Approval chains were introduced for higher-risk applications, specifically sanctions/watchlist matches and elderly-assisted registrations. These now require sign-off from more than one reviewer before an account is verified, rather than a single click.</li>
+      <li style="margin-bottom:0;">A basic outbound webhook system was added, so an automation event can notify an external system, with a delivery log for troubleshooting.</li>
+    </ul>
+
+    <h3 style="font-size:16px; color:#374151; margin:22px 0 10px 0;">2.4 Module 5: Compliance and Audit</h3>
+    <p style="margin:0 0 8px 0; font-size:15px;">Work on this module began at the end of the reporting period and is still in progress. Completed so far, on the server side:</p>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">A live compliance checklist that checks real data on demand (verification rate, stale pending reviews, two-factor authentication coverage on admin accounts, whether high-risk clients actually went through an approval chain, Terms acceptance rate, and open compliance exceptions), rather than a static form.</li>
+      <li style="margin-bottom:8px;">An anomaly detection routine covering five checks: high-risk clients verified without a chain, chains marked complete that were not, duplicate ID numbers, agents with unusually high rejection rates, and clients stuck in repeated resubmission.</li>
+      <li style="margin-bottom:8px;">A manual override log, which flags any case where an admin approved a client despite a flagged score or a watchlist match.</li>
+      <li style="margin-bottom:8px;">PDF generation for regulatory-style reports (registration summary, rejected applications, KYC compliance) and for compliance certificates, including a public verification link so a certificate's authenticity can be checked without logging in.</li>
+      <li style="margin-bottom:0;">The audit trail's filters were extended with a date range and client filter, and the action-type filter now reflects the actions actually in the system instead of a fixed list that had fallen out of date.</li>
+    </ul>
+    <p style="margin:0 0 16px 0; text-align:justify; font-size:15px;">Remaining for this module: the admin-facing screens for the checklist, anomalies, override log, report generation, and certificates. The database and API work is done; what is left is primarily interface work to expose it.</p>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">3. Testing and user feedback</h2>
+    <p style="margin:0 0 16px 0; text-align:justify; font-size:15px;">The system has been in active use by test users throughout this period, which surfaced several real defects that would not have been obvious from code review alone. Test feedback directly shaped the priority of fixes described in the next section.</p>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">4. Issues encountered and resolved</h2>
+    <p style="margin:0 0 8px 0; text-align:justify; font-size:15px;">A number of defects were found during testing, some pre-existing and some introduced by earlier work. All were fixed and verified before moving on.</p>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">The CAPTCHA challenge on the registration forms was calling the wrong API endpoint and had been silently failing since it was first built. This was corrected and confirmed working on both the client and agent self-registration forms.</li>
+      <li style="margin-bottom:8px;">A separate defect meant that every successful client self-registration was actually crashing the request handler after the record had already been saved, so the applicant saw a server error even though their registration had gone through. This was traced to a variable name mistake in the audit logging step and fixed.</li>
+      <li style="margin-bottom:8px;">The login rate limiter was counting every login attempt, including successful ones, against a shared limit for the connecting network. In practice this meant that once one account had logged in a few times, other accounts on the same network (for example, two testers on the same office Wi-Fi) would be temporarily blocked from logging in at all. The limiter now only counts failed attempts.</li>
+      <li style="margin-bottom:8px;">Three dashboard pages (Security Monitoring, Communications, and Workflow Automation) loaded several pieces of data at once using a pattern where a single failed request caused the whole page to show nothing, even if the rest of the data had loaded successfully. All three were changed to load each piece independently, so a partial failure no longer looks like a total one.</li>
+      <li style="margin-bottom:0;">A more serious issue was reported as widespread "403 forbidden" errors affecting many users, including after a normal login. Investigation of the server logs traced this to a private network address left in the IP blocklist from earlier feature testing, which was intermittently matching real traffic. The entry was removed and the blocking feature was hardened in three ways: private and reserved IP ranges can no longer be blocked at all, a person can no longer block the address they are currently connecting from, and blocking now requires an explicit confirmation step plus a warning if the address has recently been used by other legitimate accounts. Blocks also now expire automatically rather than needing to be manually reversed.</li>
+    </ul>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">5. Next steps</h2>
+    <ul style="margin:0 0 16px 0; padding-left:22px; font-size:15px;">
+      <li style="margin-bottom:8px;">Complete the admin interface for Module 5 (Compliance and Audit) so the backend work described above is actually usable.</li>
+      <li style="margin-bottom:8px;">Begin Module 6, Reporting and Analytics, which remains the last module with confirmed gaps against the original specification.</li>
+      <li style="margin-bottom:0;">Continue monitoring test user feedback for further defects, given how effective real usage has been at surfacing issues that were not visible in code review.</li>
+    </ul>
+
+    <h2 style="font-size:20px; color:#2563eb; border-bottom:1px solid #e5e7eb; padding-bottom:6px; margin:32px 0 12px 0;">6. Conclusion</h2>
+    <p style="margin:0; text-align:justify; font-size:15px;">Modules 1, 3, and 4 are now complete against the original specification, Module 5 is underway, and several defects affecting real users, some minor and one significant, have been found and resolved. The project remains on track, with Module 5's interface and Module 6 as the next priorities.</p>
+
+  </div>
+
+</body>
+</html>
